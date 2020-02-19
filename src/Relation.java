@@ -6,6 +6,12 @@ public class Relation {
 
     private int length;
 
+    public Relation(Peak firstPeak, Peak secondPeak, int length){
+        this.firstPeak = firstPeak;
+        this.secondPeak = secondPeak;
+        this.length = length;
+    }
+
     public void show() {
         StringBuilder builder = new StringBuilder();
         builder.append(firstPeak.getId())
