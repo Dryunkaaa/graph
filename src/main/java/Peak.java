@@ -6,6 +6,9 @@ public class Peak {
         this.id = id;
     }
 
+    public Peak() {
+    }
+
     public int getId() {
         return id;
     }

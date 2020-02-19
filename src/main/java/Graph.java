@@ -22,6 +22,16 @@ public class Graph {
         relations.add(new Relation(firstPeak, secondPeak, length));
     }
 
+    public Peak getPeakById(int id){
+        for(Peak peak : peaks){
+            if (peak.getId() == id){
+                return peak;
+            }
+        }
+
+        return new Peak();
+    }
+
     public Set<Peak> getPeaks() {
         return peaks;
     }

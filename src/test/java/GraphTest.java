@@ -27,4 +27,12 @@ public class GraphTest {
         Assert.assertEquals(graph.getRelations().size(), 1);
     }
 
+    @Test
+    public void testIfReturnPeakById(){
+        int peakId = 2;
+        int peaksNumber = 5;
+        graph.addPeaks(peaksNumber);
+        Assert.assertEquals(graph.getPeakById(peakId).getId(), peakId);
+    }
+
 }
