@@ -1,15 +1,15 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Graph {
 
-    private List<Peak> peaks;
+    private Set<Peak> peaks;
 
-    private List<Relation> relations;
+    private Set<Relation> relations;
 
     public Graph() {
-        peaks = new ArrayList<>();
-        relations = new ArrayList<>();
+        peaks = new HashSet<>();
+        relations = new HashSet<>();
     }
 
     public void addPeaks(int peaksNumber) {
@@ -22,19 +22,19 @@ public class Graph {
         relations.add(new Relation(firstPeak, secondPeak, length));
     }
 
-    public List<Peak> getPeaks() {
+    public Set<Peak> getPeaks() {
         return peaks;
     }
 
-    public void setPeaks(List<Peak> peaks) {
+    public void setPeaks(Set<Peak> peaks) {
         this.peaks = peaks;
     }
 
-    public List<Relation> getRelations() {
+    public Set<Relation> getRelations() {
         return relations;
     }
 
-    public void setRelations(List<Relation> relations) {
+    public void setRelations(Set<Relation> relations) {
         this.relations = relations;
     }
 }
