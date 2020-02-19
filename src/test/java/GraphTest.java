@@ -18,4 +18,13 @@ public class GraphTest {
         Assert.assertEquals(graph.getPeaks().size(), peaksCount);
     }
 
+    @Test
+    public void testIfRelationAdded(){
+        Peak peak = new Peak(0);
+        Peak secondPeak = new Peak(1);
+        int relationLength = 15;
+        graph.addRelation(peak, secondPeak, relationLength);
+        Assert.assertEquals(graph.getRelations().size(), 1);
+    }
+
 }

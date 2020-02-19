@@ -18,6 +18,10 @@ public class Graph {
         }
     }
 
+    public void addRelation(Peak firstPeak, Peak secondPeak, int length) {
+        relations.add(new Relation(firstPeak, secondPeak, length));
+    }
+
     public List<Peak> getPeaks() {
         return peaks;
     }
