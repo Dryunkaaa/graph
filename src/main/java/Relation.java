@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Relation {
 
     private Peak firstPeak;
@@ -22,6 +24,19 @@ public class Relation {
         System.out.println(builder.toString());
     }
 
+    public boolean containsPeak(Peak peak){
+        if (firstPeak.equals(peak) || secondPeak.equals(peak)) return true;
+        return false;
+    }
+
+    public Peak getAnotherPeak(Peak inputPeak){
+        if (firstPeak.equals(inputPeak)){
+            return secondPeak;
+        }
+
+        return firstPeak;
+    }
+
     public Peak getFirstPeak() {
         return firstPeak;
     }
@@ -44,5 +59,21 @@ public class Relation {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Relation relation = (Relation) o;
+
+        return length == relation.length &&
+                Objects.equals(firstPeak, relation.firstPeak) &&
+                Objects.equals(secondPeak, relation.secondPeak);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstPeak, secondPeak, length);
     }
 }
