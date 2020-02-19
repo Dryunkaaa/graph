@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
@@ -5,6 +6,17 @@ public class Graph {
     private List<Peak> peaks;
 
     private List<Relation> relations;
+
+    public Graph() {
+        peaks = new ArrayList<>();
+        relations = new ArrayList<>();
+    }
+
+    public void addPeaks(int peaksNumber) {
+        for (int i = 0; i < peaksNumber; i++) {
+            this.peaks.add(new Peak(i));
+        }
+    }
 
     public List<Peak> getPeaks() {
         return peaks;

@@ -11,5 +11,9 @@ public class Main {
 //        relation.setSecondPeak(peak1);
 //        relation.setLength(15);
 //        relation.show();
+
+//        Graph graph = new Graph();
+//        graph.addPeaks(5);
+//        System.out.println(graph.getPeaks().size());
     }
 }
