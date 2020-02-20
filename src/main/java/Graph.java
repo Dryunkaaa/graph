@@ -2,40 +2,42 @@ import java.util.*;
 
 public class Graph {
 
-    private Set<Peak> peaks;
+    private Set<Vertex> vertices;
 
     private Set<Relation> relations;
 
-    private List<Route> routes = new ArrayList<>();
+    private List<Route> routes;
 
     public Graph() {
-        peaks = new HashSet<>();
+        vertices = new HashSet<>();
         relations = new HashSet<>();
+        routes = new ArrayList<>();
     }
 
-    public Route findBestRoute(Peak firstPeak, Peak secondPeak) {
-        Route route = new Route(firstPeak, secondPeak);
+    public Route findBestRoute(Vertex firstVertex, Vertex secondVertex) {
+        Route route = new Route(firstVertex, secondVertex);
 
-        if (checkIfRelationContains(firstPeak, secondPeak)) {
-            route.getRelations().add(getRelationByPeaks(firstPeak, secondPeak));
-            return route;
-        }
+//        if (checkIfRelationContains(firstVertex, secondVertex)) {
+//            Relation peakRelation = getRelationByPeaks(firstVertex, secondVertex);
+//            route.getRelations().add(peakRelation);
+//            return route;
+//        }
 
-        getAllWays(route, route.getStartPeak());
+        initRoutes(route, route.getStartVertex());
 
-        return getMinPeakRoute();
+        return getMinRoute();
     }
 
-    private Route getMinPeakRoute(){
-        if (routes.size()>0){
+    private Route getMinRoute() {
+        if (routes.size() > 0) {
             Route minRoute = routes.get(0);
-            int min = routes.get(0).getRelations().size();
+            int minRelationSize = routes.get(0).getRelations().size();
 
             for (int i = 1; i < routes.size(); i++) {
                 Route currentRoute = routes.get(i);
 
-                if (currentRoute.getRelations().size() < min) {
-                    min = currentRoute.getRelations().size();
+                if (currentRoute.getRelations().size() < minRelationSize) {
+                    minRelationSize = currentRoute.getRelations().size();
                     minRoute = currentRoute;
                 }
             }
@@ -46,32 +48,32 @@ public class Graph {
         return new Route();
     }
 
-    public void getAllWays(Route route, Peak inputPeak) {
+    private void initRoutes(Route route, Vertex inputVertex) {
         Route copyRoute = route.clone();
-        Set<Relation> peakRelations = getRelationsByPeak(inputPeak);
+        Set<Relation> vertexRelations = getVertexRelations(inputVertex);
 
-        for (Relation relation : peakRelations) {
-            Peak anotherPeak = relation.getAnotherPeak(inputPeak);
+        for (Relation relation : vertexRelations) {
+            Vertex oppositeVertex = relation.getOppositeVertex(inputVertex);
 
-            if (!copyRoute.containsPeak(anotherPeak)) {
-                Relation peaksRelation = getRelationByPeaks(inputPeak, anotherPeak);
-                copyRoute.getRelations().add(peaksRelation);
-                getAllWays(copyRoute.clone(), anotherPeak);
-                copyRoute.getRelations().remove(peaksRelation);
+            if (!copyRoute.containsVertex(oppositeVertex)) {
+                Relation verticesRelation = getVerticesRelation(inputVertex, oppositeVertex);
+                copyRoute.getRelations().add(verticesRelation);
+                initRoutes(copyRoute.clone(), oppositeVertex);
+                copyRoute.getRelations().remove(verticesRelation);
             }
         }
 
         if (route.getRelations().size() > 0) {
             Relation lastRelation = route.getRelations().get(route.getRelations().size() - 1);
-            if (lastRelation.containsPeak(route.getGoalPeak())) {
+            if (lastRelation.containsVertex(route.getEndVertex())) {
                 routes.add(route);
             }
         }
     }
 
-    private boolean checkIfRelationContains(Peak firstPeak, Peak secondPeak) {
+    private boolean checkIfRelationContains(Vertex firstPeak, Vertex secondPeak) {
         for (Relation relation : relations) {
-            if (relation.containsPeak(firstPeak) && relation.containsPeak(secondPeak)) {
+            if (relation.containsVertex(firstPeak) && relation.containsVertex(secondPeak)) {
                 return true;
             }
         }
@@ -79,9 +81,9 @@ public class Graph {
         return false;
     }
 
-    private Relation getRelationByPeaks(Peak firstPeak, Peak secondPeak) {
+    private Relation getVerticesRelation(Vertex firstPeak, Vertex secondPeak) {
         for (Relation relation : relations) {
-            if (relation.containsPeak(firstPeak) && relation.containsPeak(secondPeak)) {
+            if (relation.containsVertex(firstPeak) && relation.containsVertex(secondPeak)) {
                 return relation;
             }
         }
@@ -89,11 +91,11 @@ public class Graph {
         return null;
     }
 
-    private Set<Relation> getRelationsByPeak(Peak inputPeak) {
+    private Set<Relation> getVertexRelations(Vertex inputPeak) {
         Set<Relation> result = new HashSet<>();
 
         for (Relation relation : relations) {
-            if (relation.containsPeak(inputPeak)) {
+            if (relation.containsVertex(inputPeak)) {
                 result.add(relation);
             }
         }
@@ -101,31 +103,31 @@ public class Graph {
         return result;
     }
 
-    public Peak getPeakById(int id) {
-        for (Peak peak : peaks) {
+    public Vertex getVertexById(int id) {
+        for (Vertex peak : vertices) {
             if (peak.getId() == id) {
                 return peak;
             }
         }
-        return new Peak();
+        return new Vertex();
     }
 
-    public void addPeaks(int peaksNumber) {
-        for (int i = 0; i < peaksNumber; i++) {
-            this.peaks.add(new Peak(i));
+    public void addVertices(int vertexCount) {
+        for (int i = 0; i < vertexCount; i++) {
+            this.vertices.add(new Vertex(i));
         }
     }
 
-    public void addRelation(Peak firstPeak, Peak secondPeak, int length) {
-        relations.add(new Relation(firstPeak, secondPeak, length));
+    public void addRelation(Vertex firstVertex, Vertex secondVertex, int length) {
+        relations.add(new Relation(firstVertex, secondVertex, length));
     }
 
-    public Set<Peak> getPeaks() {
-        return peaks;
+    public Set<Vertex> getVertices() {
+        return vertices;
     }
 
-    public void setPeaks(Set<Peak> peaks) {
-        this.peaks = peaks;
+    public void setVertices(Set<Vertex> vertices) {
+        this.vertices = vertices;
     }
 
     public Set<Relation> getRelations() {

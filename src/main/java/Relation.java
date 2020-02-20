@@ -2,58 +2,58 @@ import java.util.Objects;
 
 public class Relation {
 
-    private Peak firstPeak;
+    private Vertex firstVertex;
 
-    private Peak secondPeak;
+    private Vertex secondVertex;
 
     private int length;
 
-    public Relation(Peak firstPeak, Peak secondPeak, int length){
-        this.firstPeak = firstPeak;
-        this.secondPeak = secondPeak;
+    public Relation(Vertex firstVertex, Vertex secondVertex, int length){
+        this.firstVertex = firstVertex;
+        this.secondVertex = secondVertex;
         this.length = length;
     }
 
     public void show() {
         StringBuilder builder = new StringBuilder();
-        builder.append(firstPeak.getId())
-                .append(" ---> ").append(secondPeak.getId())
+        builder.append(firstVertex.getId())
+                .append(" ---> ").append(secondVertex.getId())
                 .append(" (Length - ")
                 .append(length)
                 .append(")");
         System.out.println(builder.toString());
     }
 
-    public boolean containsPeak(Peak peak){
-        if (firstPeak.equals(peak) || secondPeak.equals(peak)){
+    public boolean containsVertex(Vertex vertex){
+        if (firstVertex.equals(vertex) || secondVertex.equals(vertex)){
             return true;
         }
 
         return false;
     }
 
-    public Peak getAnotherPeak(Peak inputPeak){
-        if (firstPeak.equals(inputPeak)){
-            return secondPeak;
+    public Vertex getOppositeVertex(Vertex vertex){
+        if (firstVertex.equals(vertex)){
+            return secondVertex;
         }
 
-        return firstPeak;
+        return firstVertex;
     }
 
-    public Peak getFirstPeak() {
-        return firstPeak;
+    public Vertex getFirstVertex() {
+        return firstVertex;
     }
 
-    public void setFirstPeak(Peak firstPeak) {
-        this.firstPeak = firstPeak;
+    public void setFirstVertex(Vertex firstVertex) {
+        this.firstVertex = firstVertex;
     }
 
-    public Peak getSecondPeak() {
-        return secondPeak;
+    public Vertex getSecondVertex() {
+        return secondVertex;
     }
 
-    public void setSecondPeak(Peak secondPeak) {
-        this.secondPeak = secondPeak;
+    public void setSecondVertex(Vertex secondVertex) {
+        this.secondVertex = secondVertex;
     }
 
     public int getLength() {
@@ -71,12 +71,12 @@ public class Relation {
         Relation relation = (Relation) o;
 
         return length == relation.length &&
-                Objects.equals(firstPeak, relation.firstPeak) &&
-                Objects.equals(secondPeak, relation.secondPeak);
+                Objects.equals(firstVertex, relation.firstVertex) &&
+                Objects.equals(secondVertex, relation.secondVertex);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstPeak, secondPeak, length);
+        return Objects.hash(firstVertex, secondVertex, length);
     }
 }

@@ -3,15 +3,15 @@ import java.util.List;
 
 public class Route implements Cloneable {
 
-    private Peak startPeak;
+    private Vertex startVertex;
 
-    private Peak goalPeak;
+    private Vertex endVertex;
 
     private List<Relation> relations;
 
-    public Route(Peak startPeak, Peak goalPeak) {
-        this.startPeak = startPeak;
-        this.goalPeak = goalPeak;
+    public Route(Vertex startVertex, Vertex endVertex) {
+        this.startVertex = startVertex;
+        this.endVertex = endVertex;
         relations = new ArrayList<>();
     }
 
@@ -19,9 +19,9 @@ public class Route implements Cloneable {
         relations = new ArrayList<>();
     }
 
-    public boolean containsPeak(Peak peak) {
+    public boolean containsVertex(Vertex vertex) {
         for (Relation relation : relations) {
-            if (relation.containsPeak(peak)) {
+            if (relation.containsVertex(vertex)) {
                 return true;
             }
         }
@@ -38,27 +38,27 @@ public class Route implements Cloneable {
     @Override
     protected Route clone() {
         Route route = new Route();
-        route.setStartPeak(this.getStartPeak());
-        route.setGoalPeak(this.getGoalPeak());
+        route.setStartVertex(this.getStartVertex());
+        route.setEndVertex(this.getEndVertex());
         route.getRelations().addAll(this.getRelations());
 
         return route;
     }
 
-    public Peak getStartPeak() {
-        return startPeak;
+    public Vertex getStartVertex() {
+        return startVertex;
     }
 
-    public void setStartPeak(Peak startPeak) {
-        this.startPeak = startPeak;
+    public void setStartVertex(Vertex startVertex) {
+        this.startVertex = startVertex;
     }
 
-    public Peak getGoalPeak() {
-        return goalPeak;
+    public Vertex getEndVertex() {
+        return endVertex;
     }
 
-    public void setGoalPeak(Peak goalPeak) {
-        this.goalPeak = goalPeak;
+    public void setEndVertex(Vertex endVertex) {
+        this.endVertex = endVertex;
     }
 
     public List<Relation> getRelations() {

@@ -1,14 +1,14 @@
 import java.util.Objects;
 
-public class Peak {
+public class Vertex {
 
     private int id;
 
-    public Peak(int id) {
+    public Vertex(int id) {
         this.id = id;
     }
 
-    public Peak() {
+    public Vertex() {
     }
 
     public int getId() {
@@ -23,7 +23,7 @@ public class Peak {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Peak peak = (Peak) o;
+        Vertex peak = (Vertex) o;
         return id == peak.id;
     }
 
