@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Route {
+public class Route implements Cloneable {
 
     private Peak startPeak;
 
@@ -15,7 +15,7 @@ public class Route {
         relations = new ArrayList<>();
     }
 
-    public Route(){
+    public Route() {
         relations = new ArrayList<>();
     }
 
@@ -33,6 +33,16 @@ public class Route {
         for (Relation relation : relations) {
             relation.show();
         }
+    }
+
+    @Override
+    protected Route clone() {
+        Route route = new Route();
+        route.setStartPeak(this.getStartPeak());
+        route.setGoalPeak(this.getGoalPeak());
+        route.getRelations().addAll(this.getRelations());
+
+        return route;
     }
 
     public Peak getStartPeak() {

@@ -25,7 +25,10 @@ public class Relation {
     }
 
     public boolean containsPeak(Peak peak){
-        if (firstPeak.equals(peak) || secondPeak.equals(peak)) return true;
+        if (firstPeak.equals(peak) || secondPeak.equals(peak)){
+            return true;
+        }
+
         return false;
     }
 

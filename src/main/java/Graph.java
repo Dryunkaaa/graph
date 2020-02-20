@@ -23,54 +23,45 @@ public class Graph {
 
         getAllWays(route, route.getStartPeak());
 
-        clear();
-
-        Route minRoute = routes.get(0);
-        int min = routes.get(0).getRelations().size();
-        for (int i = 1; i<routes.size(); i++){
-            Route currentRoute = routes.get(i);
-            if (currentRoute.getRelations().size() < min){
-                min = currentRoute.getRelations().size();
-                minRoute = currentRoute;
-            }
-        }
-
-        return minRoute;
+        return getMinPeakRoute();
     }
 
-    private void clear() {
-        Iterator iterator = routes.iterator();
-        while (iterator.hasNext()){
-            Route route = (Route) iterator.next();
-            boolean lastRelationContainsGoalPeak = route.getRelations().get(route.getRelations().size()-1).containsPeak(route.getGoalPeak());
-            if (!lastRelationContainsGoalPeak){
-                iterator.remove();
+    private Route getMinPeakRoute(){
+        if (routes.size()>0){
+            Route minRoute = routes.get(0);
+            int min = routes.get(0).getRelations().size();
+
+            for (int i = 1; i < routes.size(); i++) {
+                Route currentRoute = routes.get(i);
+
+                if (currentRoute.getRelations().size() < min) {
+                    min = currentRoute.getRelations().size();
+                    minRoute = currentRoute;
+                }
             }
 
+            return minRoute;
         }
+
+        return new Route();
     }
 
     public void getAllWays(Route route, Peak inputPeak) {
-        Route copyRoute = new Route();
-        copyRoute.setStartPeak(route.getStartPeak());
-        copyRoute.setGoalPeak(route.getGoalPeak());
-        copyRoute.getRelations().addAll(route.getRelations());
-
+        Route copyRoute = route.clone();
         Set<Relation> peakRelations = getRelationsByPeak(inputPeak);
 
         for (Relation relation : peakRelations) {
             Peak anotherPeak = relation.getAnotherPeak(inputPeak);
+
             if (!copyRoute.containsPeak(anotherPeak)) {
                 Relation peaksRelation = getRelationByPeaks(inputPeak, anotherPeak);
                 copyRoute.getRelations().add(peaksRelation);
-                getAllWays(copyRoute, anotherPeak);
+                getAllWays(copyRoute.clone(), anotherPeak);
                 copyRoute.getRelations().remove(peaksRelation);
             }
-
         }
 
-        if (route.getRelations().size()>0){
-
+        if (route.getRelations().size() > 0) {
             Relation lastRelation = route.getRelations().get(route.getRelations().size() - 1);
             if (lastRelation.containsPeak(route.getGoalPeak())) {
                 routes.add(route);
