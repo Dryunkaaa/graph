@@ -30,8 +30,19 @@ public class Route implements Cloneable {
     }
 
     public void show() {
-        for (Relation relation : relations) {
-            relation.show();
+        Vertex tempVertex = null;
+
+        for (int i = 0; i < relations.size(); i++) {
+            if (i == 0) {
+                Vertex oppositeVertex = relations.get(0).getOppositeVertex(startVertex);
+                relations.get(0).show(startVertex, oppositeVertex);
+                tempVertex = oppositeVertex;
+
+            } else {
+                Vertex oppositeVertex = relations.get(i).getOppositeVertex(tempVertex);
+                relations.get(i).show(tempVertex, oppositeVertex);
+                tempVertex = oppositeVertex;
+            }
         }
     }
 

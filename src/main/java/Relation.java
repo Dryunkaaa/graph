@@ -14,10 +14,10 @@ public class Relation {
         this.length = length;
     }
 
-    public void show() {
+    public void show(Vertex vertex1, Vertex vertex2) {
         StringBuilder builder = new StringBuilder();
-        builder.append(firstVertex.getId())
-                .append(" ---> ").append(secondVertex.getId())
+        builder.append(vertex1.getId())
+                .append(" ---> ").append(vertex2.getId())
                 .append(" (Length - ")
                 .append(length)
                 .append(")");
