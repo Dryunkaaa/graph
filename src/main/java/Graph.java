@@ -20,6 +20,7 @@ public class Graph {
                 return vertex;
             }
         }
+
         return new Vertex();
     }
 
@@ -67,7 +68,8 @@ public class Graph {
             if (!copyRoute.containsVertex(oppositeVertex)) {
                 Relation verticesRelation = getVerticesRelation(inputVertex, oppositeVertex);
                 copyRoute.getRelations().add(verticesRelation);
-                initRoutes(copyRoute.clone(), oppositeVertex);
+//                initRoutes(copyRoute.clone(), oppositeVertex);
+                initRoutes(copyRoute, oppositeVertex);
                 copyRoute.getRelations().remove(verticesRelation);
             }
         }

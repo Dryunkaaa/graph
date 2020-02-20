@@ -40,8 +40,8 @@ public class Route implements Cloneable {
         Route route = new Route();
         route.setStartVertex(this.getStartVertex());
         route.setEndVertex(this.getEndVertex());
-        route.getRelations().addAll(this.getRelations());
-
+//        route.getRelations().addAll(this.getRelations());
+        route.setRelations(new ArrayList<>(this.getRelations()));
         return route;
     }
 
