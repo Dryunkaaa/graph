@@ -14,38 +14,47 @@ public class Graph {
         routes = new ArrayList<>();
     }
 
+    public Vertex getVertexById(int id) {
+        for (Vertex vertex : vertices) {
+            if (vertex.getId() == id) {
+                return vertex;
+            }
+        }
+        return new Vertex();
+    }
+
+    public void addVertices(int vertexCount) {
+        for (int i = 0; i < vertexCount; i++) {
+            this.vertices.add(new Vertex(i));
+        }
+    }
+
+    public void addRelation(Vertex firstVertex, Vertex secondVertex, int length) {
+        relations.add(new Relation(firstVertex, secondVertex, length));
+    }
+
     public Route findBestRoute(Vertex firstVertex, Vertex secondVertex) {
         Route route = new Route(firstVertex, secondVertex);
 
-//        if (checkIfRelationContains(firstVertex, secondVertex)) {
-//            Relation peakRelation = getRelationByPeaks(firstVertex, secondVertex);
-//            route.getRelations().add(peakRelation);
-//            return route;
-//        }
+        if (verticesGenerateRelation(firstVertex, secondVertex)) {
+            Relation verticesRelation = getVerticesRelation(firstVertex, secondVertex);
+            route.getRelations().add(verticesRelation);
+            return route;
+        }
 
         initRoutes(route, route.getStartVertex());
 
         return getMinRoute();
     }
 
-    private Route getMinRoute() {
-        if (routes.size() > 0) {
-            Route minRoute = routes.get(0);
-            int minRelationSize = routes.get(0).getRelations().size();
-
-            for (int i = 1; i < routes.size(); i++) {
-                Route currentRoute = routes.get(i);
-
-                if (currentRoute.getRelations().size() < minRelationSize) {
-                    minRelationSize = currentRoute.getRelations().size();
-                    minRoute = currentRoute;
-                }
+    private boolean verticesGenerateRelation(Vertex firstVertex, Vertex secondVertex) {
+        for (Relation relation : relations) {
+            if (relation.containsVertex(firstVertex) && relation.containsVertex(secondVertex)) {
+                return true;
             }
-
-            return minRoute;
         }
 
-        return new Route();
+        return false;
     }
 
     private void initRoutes(Route route, Vertex inputVertex) {
@@ -71,19 +80,29 @@ public class Graph {
         }
     }
 
-    private boolean checkIfRelationContains(Vertex firstPeak, Vertex secondPeak) {
-        for (Relation relation : relations) {
-            if (relation.containsVertex(firstPeak) && relation.containsVertex(secondPeak)) {
-                return true;
+    private Route getMinRoute() {
+        if (routes.size() > 0) {
+            Route minRoute = routes.get(0);
+            int minRelationSize = routes.get(0).getRelations().size();
+
+            for (int i = 1; i < routes.size(); i++) {
+                Route currentRoute = routes.get(i);
+
+                if (currentRoute.getRelations().size() < minRelationSize) {
+                    minRelationSize = currentRoute.getRelations().size();
+                    minRoute = currentRoute;
+                }
             }
+
+            return minRoute;
         }
 
-        return false;
+        return new Route();
     }
 
-    private Relation getVerticesRelation(Vertex firstPeak, Vertex secondPeak) {
+    private Relation getVerticesRelation(Vertex firstVertex, Vertex secondVertex) {
         for (Relation relation : relations) {
-            if (relation.containsVertex(firstPeak) && relation.containsVertex(secondPeak)) {
+            if (relation.containsVertex(firstVertex) && relation.containsVertex(secondVertex)) {
                 return relation;
             }
         }
@@ -91,35 +110,16 @@ public class Graph {
         return null;
     }
 
-    private Set<Relation> getVertexRelations(Vertex inputPeak) {
+    private Set<Relation> getVertexRelations(Vertex vertex) {
         Set<Relation> result = new HashSet<>();
 
         for (Relation relation : relations) {
-            if (relation.containsVertex(inputPeak)) {
+            if (relation.containsVertex(vertex)) {
                 result.add(relation);
             }
         }
 
         return result;
-    }
-
-    public Vertex getVertexById(int id) {
-        for (Vertex peak : vertices) {
-            if (peak.getId() == id) {
-                return peak;
-            }
-        }
-        return new Vertex();
-    }
-
-    public void addVertices(int vertexCount) {
-        for (int i = 0; i < vertexCount; i++) {
-            this.vertices.add(new Vertex(i));
-        }
-    }
-
-    public void addRelation(Vertex firstVertex, Vertex secondVertex, int length) {
-        relations.add(new Relation(firstVertex, secondVertex, length));
     }
 
     public Set<Vertex> getVertices() {

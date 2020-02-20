@@ -23,8 +23,8 @@ public class Vertex {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Vertex peak = (Vertex) o;
-        return id == peak.id;
+        Vertex vertex = (Vertex) o;
+        return id == vertex.id;
     }
 
     @Override
