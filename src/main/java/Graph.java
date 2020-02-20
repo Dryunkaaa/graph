@@ -68,16 +68,15 @@ public class Graph {
             if (!copyRoute.containsVertex(oppositeVertex)) {
                 Relation verticesRelation = getVerticesRelation(inputVertex, oppositeVertex);
                 copyRoute.getRelations().add(verticesRelation);
-//                initRoutes(copyRoute.clone(), oppositeVertex);
                 initRoutes(copyRoute, oppositeVertex);
                 copyRoute.getRelations().remove(verticesRelation);
             }
         }
 
-        if (route.getRelations().size() > 0) {
-            Relation lastRelation = route.getRelations().get(route.getRelations().size() - 1);
-            if (lastRelation.containsVertex(route.getEndVertex())) {
-                routes.add(route);
+        if (copyRoute.getRelations().size() > 0) {
+            Relation lastRelation = copyRoute.getRelations().get(route.getRelations().size() - 1);
+            if (lastRelation.containsVertex(copyRoute.getEndVertex())) {
+                routes.add(copyRoute);
             }
         }
     }
