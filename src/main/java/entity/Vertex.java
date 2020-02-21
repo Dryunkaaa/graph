@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.Objects;
 
 public class Vertex {
@@ -13,10 +15,6 @@ public class Vertex {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

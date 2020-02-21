@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +53,17 @@ public class Route implements Cloneable {
         Route route = new Route();
         route.setStartVertex(this.getStartVertex());
         route.setEndVertex(this.getEndVertex());
-//        route.getRelations().addAll(this.getRelations());
         route.setRelations(new ArrayList<>(this.getRelations()));
         return route;
+    }
+
+    public int getLength() {
+        int sum = 0;
+        for (Relation relation : relations) {
+            sum += relation.getLength();
+        }
+
+        return sum;
     }
 
     public Vertex getStartVertex() {

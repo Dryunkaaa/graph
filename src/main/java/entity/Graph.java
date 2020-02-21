@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.*;
 
 public class Graph {
@@ -34,31 +36,7 @@ public class Graph {
         relations.add(new Relation(firstVertex, secondVertex, length));
     }
 
-    public Route findBestRoute(Vertex firstVertex, Vertex secondVertex) {
-        Route route = new Route(firstVertex, secondVertex);
-
-        if (verticesGenerateRelation(firstVertex, secondVertex)) {
-            Relation verticesRelation = getVerticesRelation(firstVertex, secondVertex);
-            route.getRelations().add(verticesRelation);
-            return route;
-        }
-
-        initRoutes(route, route.getStartVertex());
-
-        return getMinRoute();
-    }
-
-    private boolean verticesGenerateRelation(Vertex firstVertex, Vertex secondVertex) {
-        for (Relation relation : relations) {
-            if (relation.containsVertex(firstVertex) && relation.containsVertex(secondVertex)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private void initRoutes(Route route, Vertex inputVertex) {
+    public void initRoutes(Route route, Vertex inputVertex) {
         Route copyRoute = route.clone();
         Set<Relation> vertexRelations = getVertexRelations(inputVertex);
 
@@ -81,26 +59,6 @@ public class Graph {
         }
     }
 
-    private Route getMinRoute() {
-        if (routes.size() > 0) {
-            Route minRoute = routes.get(0);
-            int minRelationSize = routes.get(0).getRelations().size();
-
-            for (int i = 1; i < routes.size(); i++) {
-                Route currentRoute = routes.get(i);
-
-                if (currentRoute.getRelations().size() < minRelationSize) {
-                    minRelationSize = currentRoute.getRelations().size();
-                    minRoute = currentRoute;
-                }
-            }
-
-            return minRoute;
-        }
-
-        return new Route();
-    }
-
     private Relation getVerticesRelation(Vertex firstVertex, Vertex secondVertex) {
         for (Relation relation : relations) {
             if (relation.containsVertex(firstVertex) && relation.containsVertex(secondVertex)) {
@@ -108,7 +66,7 @@ public class Graph {
             }
         }
 
-        return null;
+        return new Relation();
     }
 
     private Set<Relation> getVertexRelations(Vertex vertex) {
@@ -127,15 +85,11 @@ public class Graph {
         return vertices;
     }
 
-    public void setVertices(Set<Vertex> vertices) {
-        this.vertices = vertices;
-    }
-
     public Set<Relation> getRelations() {
         return relations;
     }
 
-    public void setRelations(Set<Relation> relations) {
-        this.relations = relations;
+    public List<Route> getRoutes() {
+        return routes;
     }
 }

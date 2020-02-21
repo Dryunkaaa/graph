@@ -1,3 +1,5 @@
+package entity;
+
 import java.util.Objects;
 
 public class Relation {
@@ -12,6 +14,9 @@ public class Relation {
         this.firstVertex = firstVertex;
         this.secondVertex = secondVertex;
         this.length = length;
+    }
+
+    public Relation() {
     }
 
     public void show(Vertex vertex1, Vertex vertex2) {
@@ -40,28 +45,8 @@ public class Relation {
         return firstVertex;
     }
 
-    public Vertex getFirstVertex() {
-        return firstVertex;
-    }
-
-    public void setFirstVertex(Vertex firstVertex) {
-        this.firstVertex = firstVertex;
-    }
-
-    public Vertex getSecondVertex() {
-        return secondVertex;
-    }
-
-    public void setSecondVertex(Vertex secondVertex) {
-        this.secondVertex = secondVertex;
-    }
-
     public int getLength() {
         return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 
     @Override
