@@ -43,7 +43,7 @@ public class Graph {
         for (Relation relation : vertexRelations) {
             Vertex oppositeVertex = relation.getOppositeVertex(inputVertex);
 
-            if (!copyRoute.containsVertex(oppositeVertex)) {
+            if (!copyRoute.containsVertex(oppositeVertex) && !copyRoute.endsWithEndVertex()) {
                 Relation verticesRelation = getVerticesRelation(inputVertex, oppositeVertex);
                 copyRoute.getRelations().add(verticesRelation);
                 initRoutes(copyRoute, oppositeVertex);
@@ -52,14 +52,14 @@ public class Graph {
         }
 
         if (copyRoute.getRelations().size() > 0) {
-            Relation lastRelation = copyRoute.getRelations().get(route.getRelations().size() - 1);
+            Relation lastRelation = copyRoute.getRelations().get(copyRoute.getRelations().size() - 1);
             if (lastRelation.containsVertex(copyRoute.getEndVertex())) {
                 routes.add(copyRoute);
             }
         }
     }
 
-    private Relation getVerticesRelation(Vertex firstVertex, Vertex secondVertex) {
+    public Relation getVerticesRelation(Vertex firstVertex, Vertex secondVertex) {
         for (Relation relation : relations) {
             if (relation.containsVertex(firstVertex) && relation.containsVertex(secondVertex)) {
                 return relation;
@@ -69,7 +69,7 @@ public class Graph {
         return new Relation();
     }
 
-    private Set<Relation> getVertexRelations(Vertex vertex) {
+    public Set<Relation> getVertexRelations(Vertex vertex) {
         Set<Relation> result = new HashSet<>();
 
         for (Relation relation : relations) {

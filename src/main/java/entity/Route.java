@@ -2,6 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Route implements Cloneable {
 
@@ -49,7 +50,7 @@ public class Route implements Cloneable {
     }
 
     @Override
-    protected Route clone() {
+    public Route clone() {
         Route route = new Route();
         route.setStartVertex(this.getStartVertex());
         route.setEndVertex(this.getEndVertex());
@@ -64,6 +65,13 @@ public class Route implements Cloneable {
         }
 
         return sum;
+    }
+
+    public boolean endsWithEndVertex() {
+        if (relations.size() == 0) return false;
+
+        Relation lastRelation = relations.get(relations.size() - 1);
+        return lastRelation.containsVertex(endVertex);
     }
 
     public Vertex getStartVertex() {
@@ -88,5 +96,20 @@ public class Route implements Cloneable {
 
     public void setRelations(List<Relation> relations) {
         this.relations = relations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(startVertex, route.startVertex) &&
+                Objects.equals(endVertex, route.endVertex) &&
+                Objects.equals(relations, route.relations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startVertex, endVertex, relations);
     }
 }
